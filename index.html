@@ -1,5 +1,7 @@
 <html>
     <head>
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
         <title>
             Reqesting data
         </title>
@@ -8,8 +10,12 @@
         </script>
     </head>
     <body>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <a href="index.html" class="btn btn-secondary" role="button">Home</a>
+            <a href="list.html" class="btn btn-secondary" role="button" >List Friends</a>
+        </div>
         <div class="alert alert-danger" role="alert" style = "visibility:hidden;" id="alert">
-          </div>
+        </div>
         <div id="input1">
         <input type="text" id ="Id" placeholder="enter friend name"/>
         <select id="mySelect1" placeholder="yes">
@@ -18,28 +24,18 @@
         <select id="mySelect2" placeholder="yes">
             <optgroup label="FriendTimeZones"></optgroup>
         </select>
+        <select id="month" placeholder="yes">
+            <optgroup label="Month"></optgroup>
+        </select>
+        <select id="day" placeholder="yes">
+            <optgroup label="Day"></optgroup>
+        </select>
         <input type="email" id="email" placeholder="enter your email" required/>
-        <input type="date" id="date"/>
         <button id="submit" class="btn btn-success">Submit</button>
-        </div>
-        <div>
-        <input type="text" id = "getListInput">
-        <button id="getList" class="btn btn-success">getList</button>
         </div>
         <div class="alert alert-danger" role="alert" id="error" style = "visibility:hidden;">
           </div>
         <div class="alert alert-success" role="alert" id="success" style = "visibility:hidden;">
         </div>
-        <p id="demo"></p>
-        <table id="list" class="table table-dark" style = "visibility:hidden;">
-            <tr>
-                <th scope="row">No</th>
-                <th scope="col">Name</th>
-                <th scope="col">Email</th>
-                <th scope="col">BirthDay</th>
-                <th scope="col">FriendTimeZone</th>
-                <th scope="col">MyTimeZone</th>
-            </tr>
-        </table>
     </body>
 </html>

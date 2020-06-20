@@ -1,8 +1,9 @@
 
 window.onload = function() {
+    getMonth();
     myOptions();
     this.document.getElementById("submit").addEventListener("click", test);
-    this.document.getElementById("getList").addEventListener("click", listFriends);
+    this.document.getElementById("month").addEventListener("change", getDateFromMonth)
 }
 
 function test() {
@@ -91,9 +92,10 @@ function submitData() {
     var myTimeZone = document.getElementById("mySelect1").value;
 
     var email = document.getElementById("email").value;
-    var date = document.getElementById("date").value;
+    var day = document.getElementById("day").value;
+    var month = document.getElementById("month").value;
     var error = document.getElementById("error");
-    if(name == "" || friendTimeZone == "" || myTimeZone == "" || email == "" || date == "") {
+    if(name == "" || friendTimeZone == "" || myTimeZone == "" || email == "" || month == "" || day == "") {
         error.innerHTML = "Some fields are invalid";
     }
     var result = {
@@ -101,63 +103,48 @@ function submitData() {
         'friendTimeZone': friendTimeZone,
         'myTimeZone': myTimeZone,
         'email': email,
-        'date': date,
+        'date': month + "-" + day,
     };
     return JSON.stringify(result);
 }
 
-function listFriends() {
-    var xhttp = new XMLHttpRequest({mozSystem: true});
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4) {
-        if( this.status == 200 && this.statusText == "OK" ) {
-            listFormat(this.responseText);
-            return;
-        }
-        else if ( this.status == 400 ) {
-            document.getElementById("error").innerHTML = this.responseText;
-            document.getElementById("error").style.visibility = "visible";
-            return;
-        } else {
-            document.getElementById("error").innerHTML = "Some problem on our side.";
-            document.getElementById("error").style.visibility = "visible";
-        }
+function getMonth() {
+    var month = document.getElementById("month");
+    for(let i = 1; i <= 12; i++) {
+        let opt = document.createElement("option");
+        opt.text = i;
+        opt.value = i;
+        month.append(opt);
     }
-    };
-    xhttp.open("POST", "http://localhost:8080/listFriends", true);
-    console.log(document.getElementById("getListInput").value);
-    xhttp.send(document.getElementById("getListInput").value);
 }
 
-function listFormat(data) {
-    if(data == null || data.length == 0) {
-        document.getElementById("error").style.visibility = "visible";
-        document.getElementById("error").innerText = "Cannot load data.Please reload";
-        return null;
-    }
-    document.getElementById("success").style.visibility = "hidden";
-    document.getElementById("error").style.visibility = "hidden";
-    var table = document.getElementById("list");
-    for (var x=table.rows.length-1; x>0; x--) {
-        table.deleteRow(x);
-     }
-    table.style.visibility = "visible";
-    var output = JSON.parse(data);
-    let i = 1;
-    for(var key in output) {
-        var obj = output[key];
-        var tr = document.createElement("tr");
-        table.appendChild(tr);
-        var th = document.createElement("th");
-        th.innerText = i;
-        th.scope = "row";
-        tr.appendChild(th);
-        for(let i in obj) {
-            let td = document.createElement("td");
-            td.innerHTML = obj[i];
-            tr.appendChild(td);
+function getDateFromMonth() {
+    var month = document.getElementById("month").value;
+    if(month <= 7) {
+    if(month % 2 == 0) {
+        if(month == 2) {
+            getDate(1, 29);
+        } else {
+            getDate(1, 30);
         }
-        table.appendChild(tr);
-        i++;
+    } else {
+        getDate(1, 31);
+    }
+} else {
+    if(month % 2 == 0) {
+        getDate(1, 31);  
+    } else {
+        getDate(1, 30);
+    }
+}
+}
+
+function getDate(start, end) {
+    var day = document.getElementById("day");
+    for(let i = start; i <= end; i++) {
+        let opt = document.createElement("option");
+        opt.text = i;
+        opt.value = i;
+        day.append(opt);
     }
 }
